@@ -29,7 +29,7 @@ public class StudentService
 		int a=(secured_marks*100);
 		double per=a/totalmarks;
 		student.setPercentage(per);
-		double percentage= student.getPercentage();
+		double percentage=student.getPercentage();
 		if(percentage<35)
 		{
 			student.setGrade("fail");
@@ -304,6 +304,34 @@ public class StudentService
 			structure.setStatus(HttpStatus.OK.value());
 			structure.setData(student);
 			student.setMarks(marks);
+			
+			int secured_marks=student.getMarks();
+			int totalmarks=student.getTotal_marks();
+			int a=(secured_marks*100);
+			double per=a/totalmarks;
+			student.setPercentage(per);
+			double percentage= student.getPercentage();
+			if(percentage<35)
+			{
+				student.setGrade("fail");
+			}
+			else if(percentage>=35 && percentage<60)
+			{
+				student.setGrade("pass");
+			}
+			else if(percentage<=60 && percentage<75)
+			{
+				student.setGrade("First class");
+			}
+			else if(percentage>=75 && percentage<90)
+			{
+				student.setGrade("first class with distinction");
+			}
+			else
+			{
+				student.setGrade("A+");
+			}
+			
 			dao.updateStudent(id, student);
 			return new ResponseEntity<ResponseStructure<Student>>(structure,HttpStatus.OK);
 		}
